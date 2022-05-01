@@ -21,12 +21,20 @@ const run = async () => {
     await client.connect();
     console.log("site is Connected");
     const itemsCollection = client.db("gadget-world").collection("items");
+    const reviewCollection = client.db("gadget-world").collection("reviews");
     /// Load all Products from Db
     app.get("/items", async (req, res) => {
       const query = {};
       const cursor = itemsCollection.find(query);
       const products = await cursor.toArray();
       res.send(products);
+    });
+    /// Load all Reviews from Db
+    app.get("/reviews", async (req, res) => {
+      const query = {};
+      const cursor = reviewCollection.find(query);
+      const reviews = await cursor.toArray();
+      res.send(reviews);
     });
   } catch (error) {}
 };
