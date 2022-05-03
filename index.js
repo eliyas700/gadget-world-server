@@ -1,5 +1,5 @@
 const express = require("express");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express();
 const cors = require("cors");
 require("dotenv").config();
@@ -35,6 +35,30 @@ const run = async () => {
       const cursor = reviewCollection.find(query);
       const reviews = await cursor.toArray();
       res.send(reviews);
+    });
+    //Load a Specific Product Detail
+    app.get("/items/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const item = await itemsCollection.findOne(query);
+      res.send(item);
+    });
+    //Update Specific Product
+    //Update User (Update Selected User Information)
+    app.put("/items/:id", async (req, res) => {
+      const id = req.params.id;
+      const updateProduct = req.body;
+      const filter = { _id: ObjectId(id) };
+      const option = { upsert: true };
+      console.log(updateProduct.Quantity);
+      const updateDoc = {
+        $set: {
+          quantity: updateProduct.Quantity,
+          sale: updateProduct.Sale,
+        },
+      };
+      const result = await itemsCollection.updateOne(filter, updateDoc, option);
+      res.send(result);
     });
   } catch (error) {}
 };
