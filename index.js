@@ -44,7 +44,6 @@ const run = async () => {
       res.send(item);
     });
     //Update Specific Product
-    //Update User (Update Selected User Information)
     app.put("/items/:id", async (req, res) => {
       const id = req.params.id;
       const updateProduct = req.body;
@@ -58,6 +57,13 @@ const run = async () => {
         },
       };
       const result = await itemsCollection.updateOne(filter, updateDoc, option);
+      res.send(result);
+    });
+    //Add a Item
+    app.post("/items", async (req, res) => {
+      const newItem = req.body;
+      console.log(newItem);
+      const result = await itemsCollection.insertOne(newItem);
       res.send(result);
     });
   } catch (error) {}
