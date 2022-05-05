@@ -73,6 +73,16 @@ const run = async () => {
       const result = await itemsCollection.deleteOne(query);
       res.send(result);
     });
+
+    //Get All the Items
+    app.get("/myitem", async (req, res) => {
+      const email = req.query.user;
+      const query = { user: email };
+      console.log(query);
+      const cursor = itemsCollection.find(query);
+      const products = await cursor.toArray();
+      res.send(products);
+    });
   } catch (error) {}
 };
 run();
