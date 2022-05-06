@@ -96,6 +96,7 @@ const run = async () => {
     //Get my Items
     app.get("/myitem", verifyJWT, async (req, res) => {
       const decodedEmail = req.decoded.email;
+      console.log(decodedEmail, "Decoded Email");
       const email = req.query.user;
       if (email === decodedEmail) {
         const query = { user: email };
