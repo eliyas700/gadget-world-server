@@ -41,7 +41,5 @@ This web site is Mainly gadget products Related, in this Server site you will ge
 - Cors
 - dot env
 - express
-- Icons
-
 - jsonwebtoken
 - mongodb
